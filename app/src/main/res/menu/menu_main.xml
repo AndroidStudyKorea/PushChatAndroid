@@ -1,0 +1,8 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.androidstudy.pushchat.MainActivity">
+
+    <item android:id="@+id/menu_delete_all_talk" android:title="@string/delete_all_talk" android:orderInCategory="100" app:showAsAction="never" />
+
+</menu>
