@@ -17,6 +17,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.androidstudy.pushchat.network.DeviceListResponse;
 import com.androidstudy.pushchat.network.DeviceModel;
 import com.androidstudy.pushchat.network.TalkModel;
 import com.google.android.gcm.server.Message;
@@ -98,13 +99,20 @@ public class MainActivity extends ActionBarActivity {
 
     private void initalizeTargetList()
     {
-        mTargetList.put("스노야", "APA91bFf7n2S-O7W1lpTaSoQNqSCwoXinevIsc7NVdJUDpoMa4FQ8bbzW76wG8yIH8V_cddnCxCkkiG9Aev46vG5owea3Bys0jgx8KoTKQZ4S6fm0DAGVpSlR4Zv_sOdz7-k2Xa62KRVdlp0_SFf7pE0t1mPpScurQ");
-        mTargetList.put("디카프리오", "APA91bH1U8N8XfihoVG2Kq1GeQAjUkoFasQhAToeAsnWuMXrqIt46fEg4jRQGs3Z3AKfPXobpA8xlxuPKstX_QbTcRafl8RSUaePuXAAuTIIKLgI3SMll2ctPu1j-JzJ0n3OgWvpfuvO");
-        mTargetList.put("에이든", "APA91bFDqjJ-N1EtEehf841I1Ha0nxkdi_iWnqr8sLx_h9X9wldhmCTj32WWRflb8Jkt_iJ_T2MHU6T6xcSZIVIJdaltlSdmlBB6wSmAM-PCgD0z2_vdG59VUYn6g1-Gqsc2r5jkDoW7Yx-6wqANzhaByiqtPKlO-A");
-        mTargetList.put("클로이", "APA91bGM9KAMb2aKJYUmbxp9_w-oRk7NKiWJR8FG7li4ScZq09CO8wscLpUDqkHI8TozLB0f3Jf1-5s-s2v9t9m6dDzR3myZtt0ugZ_I926vOxV2FaQwyUYZY7D-7ya5s23EklsnN6bJNyzDQaC0P2iUF_pEnqLl1Q");
+        MyApp.mApiService.device_list(new Callback<DeviceListResponse>() {
+            public void success(DeviceListResponse deviceListResponse, Response response) {
+                Toast.makeText(getApplicationContext(), "device/list success\n" + deviceListResponse.results.toString(), Toast.LENGTH_SHORT).show();
+                for (DeviceModel device : deviceListResponse.results) {
+                    mTargetList.put(device.user_name, device.push_token);
+                }
+                for (String name : mTargetList.keySet())
+                    mTargetRegIdList.add(mTargetList.get(name));
+            }
 
-        for (String name : mTargetList.keySet())
-            mTargetRegIdList.add(mTargetList.get(name));
+            public void failure(RetrofitError error) {
+                Toast.makeText(getApplicationContext(), "device/list failed\n" + error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void registerInBackground() {
