@@ -9,6 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.androidstudy.pushchat.network.TalkModel;
+
 public class DbHelper extends SQLiteOpenHelper
 {
 	private static final String TAG = "DbHelper";

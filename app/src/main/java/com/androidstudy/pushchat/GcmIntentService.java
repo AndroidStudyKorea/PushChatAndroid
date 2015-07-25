@@ -16,6 +16,7 @@
 
 package com.androidstudy.pushchat;
 
+import com.androidstudy.pushchat.network.TalkModel;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.app.IntentService;
