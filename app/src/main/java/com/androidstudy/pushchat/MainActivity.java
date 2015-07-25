@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.androidstudy.pushchat.network.DeviceModel;
 import com.androidstudy.pushchat.network.TalkModel;
@@ -121,9 +122,11 @@ public class MainActivity extends ActionBarActivity {
                     device.push_token = regid;
                     MyApp.mApiService.device_create(device, new Callback<DeviceModel>() {
                         public void success(DeviceModel deviceModel, Response response) {
+                            Toast.makeText(getApplicationContext(), "device/create success", Toast.LENGTH_SHORT).show();
                         }
 
                         public void failure(RetrofitError error) {
+                            Toast.makeText(getApplicationContext(), "device/create failed\n" + error.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
