@@ -64,7 +64,7 @@ public class DbHelper extends SQLiteOpenHelper
 			{
 				TalkModel talk = new TalkModel();
 
-				talk.author = cursor.getString(TABLE_INDEX_AUTHOR);
+				talk.author_name = cursor.getString(TABLE_INDEX_AUTHOR);
 				talk.created = CalUtil.stringToDate(cursor.getString(TABLE_INDEX_CREATED));
 				talk.content = cursor.getString(TABLE_INDEX_CONTENT);
 				talk.my_talk = cursor.getInt(TABLE_INDEX_MY_TALK) > 0;
@@ -129,7 +129,7 @@ public class DbHelper extends SQLiteOpenHelper
 			}
 
 			ContentValues values = new ContentValues();
-			values.put("author", talk.author);
+			values.put("author", talk.author_name);
 			values.put("created", CalUtil.dateToString(talk.created));
 			values.put("content", talk.content);
 			values.put("my_talk", talk.my_talk);

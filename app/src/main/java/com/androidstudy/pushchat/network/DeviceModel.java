@@ -4,5 +4,5 @@ public class DeviceModel
 {
 	public String device_id;
 	public String push_token;
-	public String name;
+	public String user_name;
 }

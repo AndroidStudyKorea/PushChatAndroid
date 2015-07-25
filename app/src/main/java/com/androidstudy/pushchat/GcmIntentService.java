@@ -68,7 +68,7 @@ public class GcmIntentService extends IntentService {
                 // Post notification of received message.
                 Log.i(TAG, "Received: " + extras.toString());
                 TalkModel talk = new TalkModel();
-                talk.author = extras.getString("author");
+                talk.author_name = extras.getString("author");
                 talk.created = CalUtil.stringToDate(extras.getString("created"));
                 talk.content = extras.getString("content");
                 talk.my_talk = false;

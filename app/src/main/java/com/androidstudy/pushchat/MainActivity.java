@@ -118,7 +118,7 @@ public class MainActivity extends ActionBarActivity {
 
                     DeviceModel device = new DeviceModel();
                     device.device_id = Build.SERIAL;
-                    device.name = MY_NICK;
+                    device.user_name = MY_NICK;
                     device.push_token = regid;
                     MyApp.mApiService.device_create(device, new Callback<DeviceModel>() {
                         public void success(DeviceModel deviceModel, Response response) {
@@ -188,7 +188,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void sendPush(final String content) {
         final TalkModel talk = new TalkModel();
-        talk.author = MY_NICK;
+        talk.author_name = MY_NICK;
         talk.created = new Date();
         talk.content = content;
         talk.my_talk = true;
@@ -201,7 +201,7 @@ public class MainActivity extends ActionBarActivity {
             protected Object doInBackground(Object[] objects) {
                 Sender sender = new Sender(API_KEY);
                 Message message = new Message.Builder()
-                        .addData("author", talk.author)
+                        .addData("author", talk.author_name)
                         .addData("created", CalUtil.dateToString(talk.created))
                         .addData("content", talk.content)
                         .build();
@@ -237,9 +237,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         // 작성자
-        if (talk.author != null) {
+        if (talk.author_name != null) {
             TextView lblAuthor = (TextView)item.findViewById(R.id.lblAuthor);
-            lblAuthor.setText(talk.author);
+            lblAuthor.setText(talk.author_name);
         }
 
         // 날짜 및 시간

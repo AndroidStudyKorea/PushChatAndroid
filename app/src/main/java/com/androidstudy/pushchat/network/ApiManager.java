@@ -7,7 +7,7 @@ import retrofit.converter.GsonConverter;
 
 public class ApiManager
 {
-    public static final String API_URL   = "http://192.168.1.4:8000";
+    public static final String API_URL   = "http://192.168.1.4:8000/api";
 
 	private static Gson gson = new GsonBuilder()
 			.setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
