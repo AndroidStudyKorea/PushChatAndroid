@@ -7,12 +7,12 @@ import retrofit.http.POST;
 
 public interface ApiService
 {
-    @POST("/device/")
+    @POST("/devices/")
     void device_create(@Body DeviceModel talk, Callback<DeviceModel> cb);
 
-    @GET("/device/")
+    @GET("/devices/")
     void device_list(Callback<DeviceListResponse> cb);
 
-    @POST("/talk/")
+    @POST("/talks/")
     void talk_create(@Body TalkModel talk, Callback<TalkModel> cb);
 }

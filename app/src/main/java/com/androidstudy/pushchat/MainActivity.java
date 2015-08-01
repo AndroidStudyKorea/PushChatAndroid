@@ -1,5 +1,7 @@
 package com.androidstudy.pushchat;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
@@ -49,7 +51,7 @@ public class MainActivity extends ActionBarActivity {
     GoogleCloudMessaging gcm;
     String regid;
 
-    HashMap<String, String> mTargetList = new HashMap<String, String>();
+    ArrayList<DeviceModel> mDeviceList = new ArrayList<DeviceModel>();
     ArrayList<String> mTargetRegIdList = new ArrayList<String>();
 
     @Override
@@ -103,10 +105,8 @@ public class MainActivity extends ActionBarActivity {
             public void success(DeviceListResponse deviceListResponse, Response response) {
                 Toast.makeText(getApplicationContext(), "device/list success\n" + deviceListResponse.results.toString(), Toast.LENGTH_SHORT).show();
                 for (DeviceModel device : deviceListResponse.results) {
-                    mTargetList.put(device.user_name, device.push_token);
+                    mDeviceList.add(device);
                 }
-                for (String name : mTargetList.keySet())
-                    mTargetRegIdList.add(mTargetList.get(name));
             }
 
             public void failure(RetrofitError error) {
@@ -152,21 +152,21 @@ public class MainActivity extends ActionBarActivity {
 
     public void onClick(View view) {
         if (view.getId() == R.id.btnSelect) {
-//            final ArrayList<String> nameList = new ArrayList<String>();
-//            for (String name : mTargetList.keySet())
-//                nameList.add(name);
-//
-//            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//            builder.setTitle("Select Target");
-//            builder.setItems(nameList.toArray(new String[0]), new DialogInterface.OnClickListener() {
-//                public void onClick(DialogInterface dialog, int which) {
+            String[] nameList = new String[mDeviceList.size()];
+            for (int i=0; i<mDeviceList.size(); i++)
+                nameList[i] = mDeviceList.get(i).user_name;
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("친구 목록");
+            builder.setItems(nameList, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
 //                    String targetName = nameList.get(which);
 //                    Button btnSelect = (Button)findViewById(R.id.btnSelect);
 //                    btnSelect.setText(targetName);
-//                    mTargetRegId = mTargetList.get(targetName);
-//                }
-//            });
-//            builder.show();
+//                    mTargetRegId = mDeviceList.get(targetName);
+                }
+            });
+            builder.show();
         }
         else if (view.getId() == R.id.btnSend) {
 //            Log.i(TAG, "Push button clicked!");
