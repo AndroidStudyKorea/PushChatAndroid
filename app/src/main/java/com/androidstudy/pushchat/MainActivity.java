@@ -177,7 +177,6 @@ public class MainActivity extends ActionBarActivity {
             TalkModel talk = new TalkModel();
             talk.author_name = MY_NICK;
             talk.created = new Date();
-            talk.author_name = MY_NICK;
             talk.content = edtContent.getText().toString();
             talk.my_talk = true;
 
