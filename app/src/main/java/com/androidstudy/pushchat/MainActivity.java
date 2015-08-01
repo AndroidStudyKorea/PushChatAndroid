@@ -172,20 +172,16 @@ public class MainActivity extends ActionBarActivity {
             builder.show();
         }
         else if (view.getId() == R.id.btnSend) {
-//            Log.i(TAG, "Push button clicked!");
-//            if (mTargetRegId == null) {
-//                Toast toast = Toast.makeText(this, "대상을 지정해 주세요.", Toast.LENGTH_LONG);
-//                toast.setGravity(Gravity.CENTER, 0, 0);
-//                toast.show();
-//                return;
-//            }
             EditText edtContent = (EditText)findViewById(R.id.edtContent);
 
             TalkModel talk = new TalkModel();
             talk.author_name = MY_NICK;
+            talk.created = new Date();
+            talk.author_name = MY_NICK;
             talk.content = edtContent.getText().toString();
+            talk.my_talk = true;
 
-            sendPush(talk.content);
+            sendPush(talk);
             edtContent.setText("");
 
             MyApp.mApiService.talk_create(talk, new Callback<TalkModel>() {
@@ -204,12 +200,7 @@ public class MainActivity extends ActionBarActivity {
 
     public static String API_KEY = "AIzaSyDKSIu5JIw_E27pAarcQDnSe2QAM4A8J48";
 
-    public void sendPush(final String content) {
-        final TalkModel talk = new TalkModel();
-        talk.author_name = MY_NICK;
-        talk.created = new Date();
-        talk.content = content;
-        talk.my_talk = true;
+    public void sendPush(final TalkModel talk) {
         MyApp.dbHelper.addTalk(talk);
         addTalk(talk);
         scrollDown();
