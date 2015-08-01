@@ -107,6 +107,9 @@ public class MainActivity extends ActionBarActivity {
                 for (DeviceModel device : deviceListResponse.results) {
                     mDeviceList.add(device);
                 }
+
+                for (DeviceModel device : mDeviceList)
+                    mTargetRegIdList.add(device.push_token);
             }
 
             public void failure(RetrofitError error) {
@@ -177,16 +180,23 @@ public class MainActivity extends ActionBarActivity {
 //                return;
 //            }
             EditText edtContent = (EditText)findViewById(R.id.edtContent);
-            sendPush(edtContent.getText().toString());
+
+            TalkModel talk = new TalkModel();
+            talk.author_name = MY_NICK;
+            talk.content = edtContent.getText().toString();
+
+            sendPush(talk.content);
             edtContent.setText("");
 
-            MyApp.mApiService.talk_create(new TalkModel(), new Callback<TalkModel>() {
+            MyApp.mApiService.talk_create(talk, new Callback<TalkModel>() {
                 @Override
                 public void success(TalkModel mealModels, Response response) {
+                    Toast.makeText(getApplicationContext(), "talks/create success", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
+                    Toast.makeText(getApplicationContext(), "talks/create failed\n" + error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
